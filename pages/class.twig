@@ -10,14 +10,14 @@
 {% block content %}
 {% if class.shortdesc %}
 
-{{ class.shortdesc }}
+{{ class.shortdesc|raw }}
 {% endif %}
 {% if class.longdesc %}
 
 Description
 -----------
 
-{{ class.longdesc }}
+{{ class.longdesc|raw }}
 {% endif %}
 
 Signature
@@ -53,7 +53,7 @@ This {{ class_type(class) }} defines the following constants:
 
 ### `{{ constant.name }}` <a name="{{ constant.name }}"></a>
 
-{{ constant.longdesc }}
+{{ constant.longdesc|raw }}
 {% endfor %}
 {% endif %}
 {% if class.properties %}
@@ -72,13 +72,13 @@ This {{ class_type(class) }} defines the following properties:
 ### `${{ property.name }}` <a name="{{ property.name }}"></a>
 {% if property.shortdesc %}
 
-{{ property.shortdesc }}
+{{ property.shortdesc|raw }}
 {% endif %}
 {% if property.longdesc %}
 
 #### Description
 
-{{ property.longdesc }}
+{{ property.longdesc|raw }}
 {% endif %}
 
 #### Signature
@@ -102,13 +102,13 @@ The {{ class_type(class) }} defines the following methods:
 ### `{{ method.name }}()` <a name="{{ method.name }}"></a>
 {% if method.shortdesc %}
 
-{{ method.shortdesc }}
+{{ method.shortdesc|raw }}
 {% endif %}
 {% if method.longdesc %}
 
 #### Description
 
-{{ method.longdesc }}
+{{ method.longdesc|raw }}
 {% endif %}
 {% if method.tags("see") %}
 

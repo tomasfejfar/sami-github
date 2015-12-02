@@ -1,8 +1,9 @@
 GitHub
 ======
+This is a fork of phine/sami-github, with a few fixes as the original project is abandoned.
 
-[![Latest Stable Version][]](https://packagist.org/packages/phine/sami-github)
-[![Total Downloads][]](https://packagist.org/packages/phine/sami-github)
+[![Latest Stable Version][]](https://packagist.org/packages/devedge/sami-github)
+[![Total Downloads][]](https://packagist.org/packages/devedge/sami-github)
 
 A Sami theme for GitHub Markdown formatted documentation.
 
@@ -51,14 +52,13 @@ Installation
 
 Via [Composer][]:
 
-    $ composer require "phine/sami-github=~1.0"
+    $ composer require "devedge/sami-github=~1.0"
 
 License
 -------
 
 This library is available under the [MIT license](LICENSE).
 
-[Latest Stable Version]: https://poser.pugx.org/phine/sami-github/v/stable.png
-[Total Downloads]: https://poser.pugx.org/phine/sami-github/downloads.png
 [Sami]: http://sami.sensiolabs.org/
 [Composer]: http://getcomposer.org/
+
