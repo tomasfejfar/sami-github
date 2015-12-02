@@ -1,18 +1,23 @@
 {
-    "name": "phine/sami-github",
-    "description": "A Sami theme for GitHub Markdown formatted documentation.",
+    "name": "devedge/sami-github",
+    "description": "A Sami theme for GitHub Markdown formatted documentation. (this is a fork of phine/sami-github)",
     "keywords": ["sami", "github"],
-    "homepage": "https://github.com/phine/sami-github",
+    "homepage": "https://github.com/ppetermann/sami-github",
     "license": "MIT",
     "authors": [
         {
             "name": "Kevin Herrera",
             "email": "kevin@herrera.io",
             "homepage": "http://kevin.herrera.io"
+        },
+        {
+            "name": "Peter Petermann",
+            "email": "ppetermann80@googlemail.com",
+            "homepage": "https://devedge.eu"
         }
     ],
     "support": {
-        "issues": "https://github.com/phine/sami-github/issues"
+        "issues": "https://github.com/devedge/sami-github/issues"
     },
     "require-dev": {
         "sami/sami": "~1.1"
