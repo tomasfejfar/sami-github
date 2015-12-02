@@ -2,9 +2,6 @@ GitHub
 ======
 This is a fork of phine/sami-github, with a few fixes as the original project is abandoned.
 
-[![Latest Stable Version][]](https://packagist.org/packages/devedge/sami-github)
-[![Total Downloads][]](https://packagist.org/packages/devedge/sami-github)
-
 A Sami theme for GitHub Markdown formatted documentation.
 
 Usage
