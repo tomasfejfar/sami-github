@@ -1,11 +1,11 @@
 {% macro class_item(class, short = false, indent = "") -%}
-    {% import _self as macros -%}
-    {{ indent }}- {{ macros.class_name(class, short) }}{% if class.shortdesc %} &mdash; {{ class.shortdesc }}{% endif %}
+{% import _self as macros -%}
+{{ indent }}- {{ macros.class_name(class, short) }}{% if class.shortdesc %} &mdash; {{ class.shortdesc }}{% endif %}
 {%- endmacro -%}
 
 {% macro class_name(class, short = false, suffix = "") -%}
-    {% import _self as macros -%}
-    {% spaceless -%}
+{% import _self as macros -%}
+{% spaceless -%}
 {% if class.projectclass or class.phpclass %}
 [`{{ short ? class.shortname : class }}{{ suffix }}`]({% if class.projectclass %}{{ macros.markdown_path(class_path(class)) }}{% else %}http://php.net/class.{{ class }}{% endif %})
 {% else %}
