@@ -1,0 +1,7 @@
+{% if has_namespaces %}
+    {% set extension = 'pages/namespaces.twig' %}
+{% else %}
+    {% set extension = 'pages/classes.twig' %}
+{% endif %}
+
+{% extends extension %}

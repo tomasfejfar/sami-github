@@ -1,11 +1,13 @@
 {% extends "layout/base.twig" %}
 
-{% from "macros.twig" import class_item, class_name, class_type, member_signature %}
+{% from "macros.twig" import class_item, class_name, class_type, member_signature, class_full, member_visibility, method_signature %}
 
-{% block title %}
+{% block title -%}
 {% set title = class %}
 {{ parent() }}
-{% endblock %}
+{{ class_full(class) }}
+
+{%- endblock %}
 
 {% block content %}
 {% if class.shortdesc %}
@@ -13,40 +15,14 @@
 {{ class.shortdesc|raw }}
 {% endif %}
 {% if class.longdesc %}
-
-Description
------------
-
-{{ class.longdesc|raw }}
-{% endif %}
-
-Signature
----------
-
-- It is a(n) **{{ class_type(class) }}**.
-{% if class.final %}
-- The {{ class_type(class) }} has been marked as **final**.
-{% endif %}
-{% if class.interfaces|length > 1 %}
-- It implements the following interfaces:
-{% for interface in class.interfaces %}
-{{ class_item(interface, false, "    ") }}
-{% endfor %}
-{% elseif class.interfaces|length > 0 %}
-- It implements the {{ class_name(class.interfaces[0], true) }} interface.
-{% endif %}
-{% if class.parent %}
-- It is a subclass of {{ class_name(class.parent, true) }}.
+> {{ class.longdesc|raw }}
 {% endif %}
 {% if class.constants %}
 
-Constants
----------
-
-This {{ class_type(class) }} defines the following constants:
+## Constants
 
 {% for constant in class.constants %}
-- [`{{ constant.name }}`](#{{ constant.name }}){% if constant.shortdesc %} &mdash; {{ constant.shortdesc }}{% endif %}
+- const [`{{ constant.name }}`](#{{ constant.name }}){% if constant.shortdesc %} - {{ constant.shortdesc }}{% endif %}
 
 {% endfor %}
 {% for constant in class.constants if constant.longdesc %}
@@ -58,44 +34,29 @@ This {{ class_type(class) }} defines the following constants:
 {% endif %}
 {% if class.properties %}
 
-Properties
-----------
-
-This {{ class_type(class) }} defines the following properties:
+## Properties
 
 {% for property in class.properties %}
-- [`${{ property.name }}`](#${{ property.name }}){% if property.shortdesc %} &mdash; {{ property.shortdesc }}{% endif %}
-
+- {{ member_visibility(property) }} {{ property.hint|join('|') }} [`${{ property.name }}`](#${{ property.name }}){% if property.shortdesc %} &mdash; {{ property.shortdesc }}{% endif %}
 {% endfor %}
 {% for property in class.properties %}
+{% if property.longdesc %}X
 
 ### `${{ property.name }}` <a name="{{ property.name }}"></a>
-{% if property.shortdesc %}
 
+{% if property.shortdesc %}
 {{ property.shortdesc|raw }}
 {% endif %}
-{% if property.longdesc %}
-
-#### Description
-
 {{ property.longdesc|raw }}
 {% endif %}
-
-#### Signature
-
-{{ member_signature("property", property) }}
 {% endfor %}
 {% endif %}
 {% if class.methods %}
 
-Methods
--------
-
-The {{ class_type(class) }} defines the following methods:
+## Methods
 
 {% for method in class.methods %}
-- [`{{ method.name }}()`](#{{ method.name }}){% if method.shortdesc %} &mdash; {{ method.shortdesc }}{% endif %}
-
+- {{ method_signature(method) }}
 {% endfor %}
 
 {% for method in class.methods %}
@@ -115,7 +76,7 @@ The {{ class_type(class) }} defines the following methods:
 #### See Also
 
 {% for tag in method.tags("see") %}
-- `{{ tag[0] }}`{% if tag[1] is defined %} &mdash; {{ tag[1:]|join(" ") }}{% endif %}
+    - `{{ tag[0] }}`{% if tag[1] is defined %} &mdash; {{ tag[1:]|join(" ") }}{% endif %}
 
 {% endfor %}
 {% endif %}

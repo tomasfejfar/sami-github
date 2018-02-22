@@ -1,9 +1,19 @@
 name: github
 
 global:
-    "pages/namespaces.twig": "1. Namespaces.md"
-    "pages/interfaces.twig": "3. Interfaces.md"
-    "pages/classes.twig": "2. Classes.md"
+  "pages/namespaces.twig": "namespaces.md"
+  "pages/interfaces.twig": "interfaces.md"
+  "pages/classes.twig": "classes.md"
+  "index.twig": "index.md"
+#  "doc-index.twig": "doc-index.html"
+#  "namespaces.twig": "namespaces.html"
+#  "classes.twig": "classes.html"
+#  "interfaces.twig": "interfaces.html"
+#  "traits.twig": "traits.html"
+#  "opensearch.twig": "opensearch.xml"
+#  "search.twig": "search.html"
+#  "sami.js.twig": "sami.js"
 
 class:
-    "pages/class.twig": "%s.md"
+  "pages/class.twig": "%s.md"
+

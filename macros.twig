@@ -3,6 +3,26 @@
 {{ indent }}- {{ macros.class_name(class, short) }}{% if class.shortdesc %} &mdash; {{ class.shortdesc }}{% endif %}
 {%- endmacro -%}
 
+{% macro class_full(class) %}
+{% import _self as macros -%}
+{%- set parts = class|split("\\") -%}
+{%- set path = parts|slice(0, -1)|join("\\") -%}
+{%- set name = parts|slice(-1, 1)|join("\\") -%}
+```php
+{{ class.final ? 'final ' : ''}}{{ macros.class_type(class) }} {{ path }}\{{ name }}
+{% if class.parent %}
+    extends
+        {{ macros.class_name(class.parent, false) }},
+{% endif %}
+{% if class.interfaces|length > 0 %}
+    implements
+{% for interface in class.interfaces %}
+        {{ macros.class_name(interface, false) }}
+{% endfor %}
+{% endif %}
+```
+{% endmacro %}
+
 {% macro class_name(class, short = false, suffix = "") -%}
 {% import _self as macros -%}
 {% spaceless -%}
@@ -43,6 +63,41 @@ class
 {{- path|replace({".html": ".md"}) -}}
 {% endspaceless %}
 {%- endmacro -%}
+
+{% macro method_signature(method) %}
+    {% import _self as macros -%}
+    {% spaceless %}
+        {% set abstract = method.abstract ? 'abstract ' : '' %}
+        {% set final = method.final ? 'final ' : '' %}
+        {% set visibility = macros.member_visibility(method) ~ ' ' %}
+        {% set parameters = '' %}
+        {% if method.parameters %}
+            {% for parameter in method.parameters %}
+                {% set parameters = parameters ~ macros.parameter_signature(parameter) %}
+                {% if not loop.last %}
+                    {% set parameters = parameters ~ ',' %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {{ abstract }}{{ visibility }}function {{ method.name }}({{ parameters }}) :
+    {% endspaceless %}
+{% endmacro %}
+
+{% macro parameter_signature(parameter) %}
+    {%- spaceless %}
+        {% import _self as macros -%}
+        {% set hint = '' %}
+        {% if parameter.hint %}
+            {% for hint in parameter.hint %}
+                {% set hint = hint ~ macros.hint(hint) %}
+                {% if not loop.last %}
+                    {% set hint = hint ~ '|' %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {{ hint }}${{ parameter.name }}
+    {% endspaceless -%}
+{% endmacro %}
 
 {% macro member_signature(type, member) -%}
 {% import _self as macros -%}
