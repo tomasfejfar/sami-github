@@ -1,11 +1,13 @@
 {% macro class_item(class, short = false, indent = "") -%}
-{{ indent }}- {{ _self.class_name(class, short) }}{% if class.shortdesc %} &mdash; {{ class.shortdesc }}{% endif %}
+{% import _self as macros -%}
+{{ indent }}- {{ macros.class_name(class, short) }}{% if class.shortdesc %} &mdash; {{ class.shortdesc }}{% endif %}
 {%- endmacro -%}
 
 {% macro class_name(class, short = false, suffix = "") -%}
+{% import _self as macros -%}
 {% spaceless -%}
 {% if class.projectclass or class.phpclass %}
-[`{{ short ? class.shortname : class }}{{ suffix }}`]({% if class.projectclass %}{{ _self.markdown_path(class_path(class)) }}{% else %}http://php.net/class.{{ class }}{% endif %})
+[`{{ short ? class.shortname : class }}{{ suffix }}`]({% if class.projectclass %}{{ macros.markdown_path(class_path(class)) }}{% else %}http://php.net/class.{{ class }}{% endif %})
 {% else %}
 `{{ class }}`
 {% endif %}
@@ -26,9 +28,10 @@ class
 {%- endmacro -%}
 
 {% macro hint(hint) -%}
+{% import _self as macros -%}
 {% spaceless %}
 {% if hint.class -%}
-{{ _self.class_name(hint.name, true, hint.array ? "[]" : "") }}
+{{ macros.class_name(hint.name, true, hint.array ? "[]" : "") }}
 {%- elseif hint.name -%}
 `{{ hint.name }}{% if hint.array %}[]{% endif %}`
 {%- endif %}
@@ -42,7 +45,8 @@ class
 {%- endmacro -%}
 
 {% macro member_signature(type, member) -%}
-- It is a **{{ _self.member_visibility(member) }}{% if member.abstract is defined and member.abstract %} abstract{% endif %}** {{ type }}.
+{% import _self as macros -%}
+- It is a **{{ macros.member_visibility(member) }}{% if member.abstract is defined and member.abstract %} abstract{% endif %}** {{ type }}.
 {% if member.final %}
 - It is a **finalized** {{ type }}.
 {% endif %}
@@ -51,10 +55,10 @@ class
 - It can be one of the following types:
 {%- for hint in member.hint %}
 
-    - {{ _self.hint(hint) }}
+    - {{ macros.hint(hint) }}
 {%- endfor -%}
 {%- elseif member.hint|length > 0 %}
-- It is a(n) {{ _self.hint(member.hint[0]) }} value.
+- It is a(n) {{ macros.hint(member.hint[0]) }} value.
 {%- else %}
 - Its type is not specified.
 {% endif %}
@@ -62,7 +66,7 @@ class
 {% if member.parameters %}
 - It accepts the following parameter(s):
 {% for parameter in member.parameters %}
-    - `${{ parameter.name }}`{% if parameter.hint %} ({% for hint in parameter.hint %}{{ _self.hint(hint) }}{% if not loop.last %}|{% endif %}{% endfor %}){% endif %}{% if parameter.shortdesc %} &mdash; {{ parameter.shortdesc }}{% endif %}
+    - `${{ parameter.name }}`{% if parameter.hint %} ({% for hint in parameter.hint %}{{ macros.hint(hint) }}{% if not loop.last %}|{% endif %}{% endfor %}){% endif %}{% if parameter.shortdesc %} &mdash; {{ parameter.shortdesc }}{% endif %}
 
 {% endfor %}
 {% endif %}
@@ -73,17 +77,17 @@ class
 - It can return one of the following values:
 {% endif %}
 {% for hint in member.hint %}
-    - {{ _self.hint(hint) }}
+    - {{ macros.hint(hint) }}
 {% endfor -%}
 {% elseif member.hint|length > 0 %}
-- It returns a(n) {{ _self.hint(member.hint[0]) }} value.
+- It returns a(n) {{ macros.hint(member.hint[0]) }} value.
 {% else %}
 - It does not return anything.
 {% endif %}
 {% if member.exceptions %}
 - It throws one of the following exceptions:
 {% for exception in member.exceptions %}
-    - {{ _self.class_name(exception[0]) }}{% if exception[1] is defined and exception[1] is not empty %} &mdash; {{ exception[1] }}{% endif %}
+    - {{ macros.class_name(exception[0]) }}{% if exception[1] is defined and exception[1] is not empty %} &mdash; {{ exception[1] }}{% endif %}
 
 {% endfor %}
 {% endif %}
